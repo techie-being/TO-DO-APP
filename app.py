@@ -112,6 +112,16 @@ def toggle_task(task_id):
         conn.commit()
     return redirect('/')
 
-if __name__ == '__main__':
+
+
+@app.route('/initdb')
+def manual_init():
     init_db()
-    app.run(debug=True)
+    return "Database initialized!"
+
+
+init_db()
+
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
