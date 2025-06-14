@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+    
+    <div id="nav">
+        <p id="p1">To-Do App</p>
+        <a href="/logout" id="r2">Logout</a>
+    </div>
+    <h2 id="h1">Welcome to Your To-Do List</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% set category, message = messages[0] %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endif %}
+    {% endwith %}
+
+
+    <form method="POST" action="/add" class="addform">
+        <input type="text" id="f1" name="content" placeholder="New task..." required>
+        <button type="submit" id="f2">Add task</button>
+    </form>
+
+<!-- Task list -->
+    <ul class="mylist">
+        {% for task in tasks %}
+            <li>
+                {{ task[2] }} 
+                {% if task[3] %}
+                    (✔ Done)
+                {% endif %}
+                <a href="/delete/{{ task[0] }}" id="a1">Remove</a>
+            </li>
+        {% else %}
+            <li>No tasks yet!</li>
+        {% endfor %}
+    </ul>
+
+    <h2 id="h2">Your Tasks</h2>
+    <ul class="mylist2">
+        {% for task in tasks %}
+            <li class="li2">
+                <form method="get" action="/toggle/{{ task[0] }}">
+                    <input type="checkbox" {% if task[3] == 1 %}checked{% endif %} onchange="this.form.submit()">
+                    <span class="{% if task[3] == 1 %}done{% endif %}">{{ task[2] }}</span>
+
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+
+    
+    
+    <p class="p"><a href="/login">Login</a> or <a href="register">Sign up</a> to get started</p>
+</body>
+</html>

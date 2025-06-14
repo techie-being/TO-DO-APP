@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentlogin To-Do</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <div id="main2">
+        <p id="p1">Hello</p>
+        <p id="p3">Welcome Back</p>
+        <h4>Hey, Welcome Back to your To-Do app</h4>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% set category, message = messages[0] %}
+        <div class="flash {{ category }}">{{ message }}</div>
+        {% endif %}
+        {% endwith %}
+
+
+
+        <form method="post" action="/login" class="form1">
+            <label for="email">Email</label><br>
+            <input type="text" id="email" name="email" required> <br><br>
+
+            <label for="password:">Password</label><br>
+            <input type="text" id="password" name="password" required> <br><br>
+            <button type="submit" id="b">Login</button>
+        </form>
+
+        <p id="p4">Don't have an Acccount? <a href="/register" id="signup">Sign up</a> to get started</p>
+    </div>
+    
+
+</body>
+
+</html>
